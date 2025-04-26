@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bonk Meme Generator</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    
+    <!-- Background images -->
+    <div class="background-grid">
+        <div style="background-image: url('{{ bg1 }}');"></div>
+        <div style="background-image: url('{{ bg2 }}');"></div>
+        <div style="background-image: url('{{ bg3 }}');"></div>
+        <div style="background-image: url('{{ bg4 }}');"></div>
+    </div>
+
+    <!-- Foreground content -->
+    <div class="content">
+        <h1>🐶 Bonk Meme Generator 🪄</h1>
+        <input id="promptInput" type="text" placeholder="Describe what the dog is doing...">
+        <button onclick="generateMeme()">Generate Meme</button>
+        <div id="memeResult"></div>
+    </div>
+    <div class="bottom-links">
+        <div class="bottom-container">
+            <div class="social-links">
+                <a target="_blank" href="https://x.com/deeplearnonsol?s=21">Twitter</a> | 
+                <a target="_blank" href="https://pump.fun/coin/E7jDjYFT6VAxSbtPPRnF8pEeWpsVCLbM7LyTAgM1pump?include-nsfw=true">Pump.fun</a>
+            </div>
+            <div id="contractAddress" class="contract-address" onclick="copyContractAddress()">
+                CA: E7jDjYFT6VAxSbtPPRnF8pEeWpsVCLbM7LyTAgM1pump
+                <span id="copiedMessage" style="display: none; margin-left: 10px; color: #00ffcc; font-size: 13px;">Copied!</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateMeme() {
+            const prompt = document.getElementById('promptInput').value;
+            fetch('/generate-meme', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({prompt: prompt})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.image_url) {
+                    document.getElementById('memeResult').innerHTML = `<img src="${data.image_url}" width="400">`;
+                } else {
+                    document.getElementById('memeResult').innerText = 'Error: ' + data.error;
+                }
+            });
+        }
+        function copyContractAddress() {
+    const addressElement = document.getElementById('contractAddress');
+    const addressText = addressElement.innerText.replace('CA: ', '').replace('Copied!', '').trim();
+    navigator.clipboard.writeText(addressText)
+        .then(() => {
+            const copiedMessage = document.getElementById('copiedMessage');
+            copiedMessage.style.display = 'inline';
+
+            setTimeout(() => {
+                copiedMessage.style.display = 'none';
+            }, 2000); // Hide after 2 seconds
+        })
+        .catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+}
+
+    </script>
+
+</body>
+</html>

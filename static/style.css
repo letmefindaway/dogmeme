@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.background-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    z-index: 0;
+}
+.background-grid div {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.6) blur(4px);
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    backdrop-filter: blur(5px);
+} 
+.content input {
+padding: 12px 20px;
+font-size: 18px;
+width: 400px;
+max-width: 90%;
+margin: 15px 0;
+border: 2px solid white;
+border-radius: 8px;
+background-color: rgba(255, 255, 255, 0.8);
+color: black;
+}
+
+.content button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.content button:hover {
+    background-color: #45a049;
+}
+.navbarContent {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+color: white;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 12px 20px;
+z-index: 1001;
+}
+
+.leftSide {
+display: flex;
+align-items: center;
+}
+
+.logoContainer {
+margin-right: 20px;
+}
+
+.logoImage {
+height: 40px;
+}
+
+.navLinks {
+list-style: none;
+display: flex;
+gap: 20px;
+}
+
+.navLinks li a {
+text-decoration: none;
+color: white;
+font-weight: 500;
+transition: color 0.3s;
+}
+
+.navLinks li a:hover {
+color: #00ffcc; /* A nice hover effect */
+}
+
+.rightSide {
+display: flex;
+align-items: center;
+}
+
+.contractAddressContainer {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.caLabel {
+font-weight: bold;
+font-size: 14px;
+}
+
+.addressWrapper {
+background-color: rgba(255, 255, 255, 0.1);
+padding: 4px 8px;
+border-radius: 6px;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 4px;
+}
+
+.contractAddress {
+font-family: monospace;
+font-size: 14px;
+}
+
+.copyButton {
+background: none;
+border: none;
+cursor: pointer;
+padding: 0;
+}
+
+.copiedTooltip {
+font-size: 12px;
+color: #00ffcc;
+margin-left: 8px;
+}
+
+.bottom-links {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    background: rgba(0, 0, 0, 0.65); /* a bit darker */
+    border-radius: 12px;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 15px;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+}
+
+.bottom-links a {
+    color: #4fc3f7; /* brighter blue */
+    margin: 0 12px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.bottom-links a:hover {
+    text-decoration: underline;
+    color: #81d4fa;
+}
+
+.contract-address {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #dddddd;
+    word-break: break-all; /* if contract address is too long, it wraps */
+}
