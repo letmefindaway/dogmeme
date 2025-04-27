@@ -1,12 +1,10 @@
-
 import base64
 import requests
-import os
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
-API_KEY = "sk-tzWetLxbCjrBynasNLnMtlVzgEjcQVu4NV1CccwF0WPZc5QY"  
+API_KEY = "sk-tzWetLxbCjrBynasNLnMtlVzgEjcQVu4NV1CccwF0WPZc5QY"
 
 url = "https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image"
 
@@ -18,16 +16,10 @@ def generate_image(prompt):
         "seed": 0,
         "cfg_scale": 5,
         "samples": 1,
-        "style_preset": "analog-film",  # analog film style
+        "style_preset": "analog-film",
         "text_prompts": [
-            {
-                "text": prompt,
-                "weight": 1
-            },
-            {
-                "text": "blurry, bad",
-                "weight": -1
-            }
+            {"text": prompt, "weight": 1},
+            {"text": "blurry, bad", "weight": -1}
         ],
     }
 
@@ -44,18 +36,9 @@ def generate_image(prompt):
 
     data = response.json()
 
-    if not os.path.exists("./static/images"):
-        os.makedirs("./static/images")
+    for image in data["artifacts"]:
+        return image["base64"]
 
-    for i, image in enumerate(data["artifacts"]):
-        img_data = base64.b64decode(image["base64"])
-        file_path = f'./static/images/bonk_meme_{image["seed"]}.png'
-        with open(file_path, "wb") as f:
-            f.write(img_data)
-
-        return f"/static/images/bonk_meme_{image['seed']}.png"
-
-# Endpoint for generating meme
 @app.route('/generate-meme', methods=['POST'])
 def generate_meme():
     try:
@@ -64,17 +47,17 @@ def generate_meme():
 
         if not prompt:
             return jsonify({'error': 'Prompt is required'}), 400
+
         final_prompt = f"dog {prompt}"
-        image_path = generate_image(final_prompt)
-        return jsonify({'image_url': image_path})
+        base64_image = generate_image(final_prompt)
+        return jsonify({'image_base64': base64_image})
+
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Root endpoint (serves HTML frontend)
 @app.route('/')
 def index():
     return render_template('index.html', bg1="/static/images/bg1.png", bg2="/static/images/bg2.png", bg3="/static/images/bg3.png", bg4="/static/images/bg4.png")
-
 
 if __name__ == '__main__':
     app.run(debug=True)
