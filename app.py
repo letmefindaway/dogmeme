@@ -64,7 +64,7 @@ def generate_meme():
 
         if not prompt:
             return jsonify({'error': 'Prompt is required'}), 400
-        final_prompt = f"{prompt}"
+        final_prompt = f"dog {prompt}"
         image_path = generate_image(final_prompt)
         return jsonify({'image_url': image_path})
     except Exception as e:
