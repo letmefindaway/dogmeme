@@ -4,7 +4,7 @@ from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
-API_KEY = "sk-ApqjI6dhMHMOXLACYUaaxfZkI9ULm99fWHYuVxqMUsG7DB3d"
+API_KEY = ""
 
 url = "https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image"
 
